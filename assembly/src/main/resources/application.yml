@@ -1,0 +1,7 @@
+server:
+  port: 8080 # 后端访问端口
+  servlet:
+    context-path: /aoi/ # 对外接口前缀
+
+logging:
+  config: classpath:log4j2.xml # log4j2配置文件
