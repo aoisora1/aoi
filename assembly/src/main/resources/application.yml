@@ -5,3 +5,17 @@ server:
 
 logging:
   config: classpath:log4j2.xml # log4j2配置文件
+
+#spring:
+#  datasource:
+#    druid:
+#      url:
+#      username:
+#      password:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      initial-size: 10 # 初始连接数量
+#      max-active: 20 # 最大存活数
+#      max-wait: 60000 # 获取连接超时时间60s
+#      query-timeout: 60000 # 查询超时60s
+#      max-wait-thread-count: 20 # 最大等待线程数 当无连接可用时进入线程等待
+#      keep-alive: true # 保持连接有效性
