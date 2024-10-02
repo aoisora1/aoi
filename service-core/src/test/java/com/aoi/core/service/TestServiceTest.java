@@ -1,6 +1,5 @@
-package com.aoi.service;
+package com.aoi.core.service;
 
-import com.aoi.core.service.TestService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

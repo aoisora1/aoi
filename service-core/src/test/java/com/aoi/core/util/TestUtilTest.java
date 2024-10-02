@@ -1,6 +1,5 @@
-package com.aoi.util;
+package com.aoi.core.util;
 
-import com.aoi.core.util.TestUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

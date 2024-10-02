@@ -1,9 +1,8 @@
-package com.aoi.service;
+package com.aoi.core.service;
 
 import com.aoi.IntegrationTest;
 import com.aoi.assembly.exception.BusinessException;
 import com.aoi.core.db.entity.TestTableEntity;
-import com.aoi.core.service.TestTableService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

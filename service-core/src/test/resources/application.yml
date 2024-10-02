@@ -1,3 +1,5 @@
 spring:
   profiles:
     active: test
+  messages:
+    basename: i18n/error/description,i18n/error/solution
