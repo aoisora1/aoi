@@ -22,9 +22,6 @@ public class ExceptionService {
     private MessageSource messageSource;
 
     public ExceptionVo getExceptionVo(BusinessException exception) {
-        // TODO 更好的异常打印方式
-        exception.printStackTrace();
-
         ExceptionVo exceptionVo = new ExceptionVo();
         exceptionVo.setCode(exception.getCode());
         // TODO 不应该是手动写local，而是根据所有配置自动循环

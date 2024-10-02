@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Pattern;
+
 /**
  * @ClassName TestController
  * @Description TODO
@@ -46,7 +48,7 @@ public class TestController {
     public void post2() { }
 
     @GetMapping("/testTable/{id}")
-    public TestTableEntity getTestTable(@PathVariable("id") String id) {
+    public TestTableEntity getTestTable(@PathVariable("id") @Pattern(regexp = "[0-9a-zA-Z]{32}]") String id) {
         return testTableService.queryById(id);
     }
 }
