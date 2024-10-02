@@ -4,6 +4,8 @@ import com.aoi.assembly.exception.BusinessException;
 import com.aoi.core.db.dao.TestTableDao;
 import com.aoi.core.db.entity.TestTableEntity;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,5 +22,16 @@ public class TestTableService extends ServiceImpl<TestTableDao, TestTableEntity>
                 .eq(TestTableEntity::getId, id)
                 .oneOpt()
                 .orElseThrow(() -> new BusinessException("1001", id));
+    }
+
+    // 测试流式查询用
+    public void printAllName() {
+        getBaseMapper().executeForAll(new ResultHandler<TestTableEntity>() {
+            @Override
+            public void handleResult(ResultContext<? extends TestTableEntity> resultContext) {
+                TestTableEntity resultObject = resultContext.getResultObject();
+                System.out.println(resultObject.getName());
+            }
+        });
     }
 }

@@ -51,4 +51,25 @@ public class TestTableServiceTest {
         Assertions.assertThat(query.getUpdateTime()).isNotNull();
         Assertions.assertThat(query.getUpdateUser()).isNotNull();
     }
+
+    @Test
+    public void testStreamQuery() {
+        TestTableEntity testTableEntity = new TestTableEntity();
+        testTableEntity.setName("test1");
+        testTableService.save(testTableEntity);
+
+        testTableEntity.setId(null);
+        testTableEntity.setName("test2");
+        testTableService.save(testTableEntity);
+
+        testTableEntity.setId(null);
+        testTableEntity.setName("test3");
+        testTableService.save(testTableEntity);
+
+        testTableEntity.setId(null);
+        testTableEntity.setName("test4");
+        testTableService.save(testTableEntity);
+
+        testTableService.printAllName();
+    }
 }
