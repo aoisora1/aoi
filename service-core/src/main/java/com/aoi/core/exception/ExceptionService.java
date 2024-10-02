@@ -16,12 +16,15 @@ import java.util.Map;
  * @Date 2024/10/2 14:30
  */
 @Component
-public class ExceptionHandler {
+public class ExceptionService {
 
     @Autowired
     private MessageSource messageSource;
 
-    public ExceptionVo getException(BusinessException exception) {
+    public ExceptionVo getExceptionVo(BusinessException exception) {
+        // TODO 更好的异常打印方式
+        exception.printStackTrace();
+
         ExceptionVo exceptionVo = new ExceptionVo();
         exceptionVo.setCode(exception.getCode());
         // TODO 不应该是手动写local，而是根据所有配置自动循环

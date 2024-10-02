@@ -2,7 +2,7 @@ package com.aoi.assembly.exception;
 
 /**
  * @ClassName BusinessException
- * @Description TODO
+ * @Description 业务异常
  * @Author 86184
  * @Date 2024/10/1 17:23
  */

@@ -15,11 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @IntegrationTest
 public class ExceptionHandlerTest {
     @Autowired
-    ExceptionHandler exceptionHandler;
+    ExceptionService exceptionService;
 
     @Test
     public void testException() {
-        ExceptionVo test = exceptionHandler.getException(new BusinessException("1001", "test"));
+        ExceptionVo test = exceptionService.getExceptionVo(new BusinessException("1001", "test"));
         Assertions.assertThat(test.getDescription().toString()).isEqualTo("{zh_CN=test不存在, en_US=test not exists}");
         Assertions.assertThat(test.getSolution().toString()).isEqualTo("{zh_CN=请联系管理员, en_US=Please contact the administrator}");
         Assertions.assertThat(test.getCode()).isEqualTo("1001");

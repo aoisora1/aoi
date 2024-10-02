@@ -19,6 +19,6 @@ public class TestTableService extends ServiceImpl<TestTableDao, TestTableEntity>
         return lambdaQuery()
                 .eq(TestTableEntity::getId, id)
                 .oneOpt()
-                .orElseThrow(() -> new BusinessException("1001"));// TODO
+                .orElseThrow(() -> new BusinessException("1001", id));
     }
 }
