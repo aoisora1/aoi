@@ -3,7 +3,9 @@ package com.aoi.core.service;
 import com.aoi.IntegrationTest;
 import com.aoi.assembly.exception.BusinessException;
 import com.aoi.core.db.entity.TestTableEntity;
+import com.aoi.core.dto.TestTableSearchDto;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +73,32 @@ public class TestTableServiceTest {
         testTableService.save(testTableEntity);
 
         testTableService.printAllName();
+    }
+
+    @Test
+    public void testPQuery() {
+        TestTableEntity testTableEntity = new TestTableEntity();
+        testTableEntity.setName("test1");
+        testTableService.save(testTableEntity);
+
+        testTableEntity.setId(null);
+        testTableEntity.setName("test2");
+        testTableService.save(testTableEntity);
+
+        testTableEntity.setId(null);
+        testTableEntity.setName("test3");
+        testTableService.save(testTableEntity);
+
+        testTableEntity.setId(null);
+        testTableEntity.setName("test4");
+        testTableService.save(testTableEntity);
+
+        TestTableSearchDto testTableSearchDto = new TestTableSearchDto();
+        testTableSearchDto.setName("test");
+        testTableSearchDto.setPage(1);
+        testTableSearchDto.setSize(2);
+        Page<TestTableEntity> testTableEntityPage = testTableService.fuzzyQueryPageByName(testTableSearchDto);
+        Assertions.assertThat(testTableEntityPage.getRecords()).hasSize(2);
+        Assertions.assertThat(testTableEntityPage.getRecords()).extracting(TestTableEntity::getName).contains("test1", "test2");
     }
 }

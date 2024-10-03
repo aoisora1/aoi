@@ -8,7 +8,8 @@ logging:
 
 mybatis-plus:
   configuration:
-    cache-enabled: false
+    cache-enabled: false # 关闭二级缓存
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开始sql打印
 
 spring:
   profiles:

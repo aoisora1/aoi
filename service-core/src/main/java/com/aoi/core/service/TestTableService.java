@@ -3,7 +3,12 @@ package com.aoi.core.service;
 import com.aoi.assembly.exception.BusinessException;
 import com.aoi.core.db.dao.TestTableDao;
 import com.aoi.core.db.entity.TestTableEntity;
+import com.aoi.core.dto.TestTableSearchDto;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
 import org.springframework.stereotype.Service;
@@ -33,5 +38,16 @@ public class TestTableService extends ServiceImpl<TestTableDao, TestTableEntity>
                 System.out.println(resultObject.getName());
             }
         });
+    }
+
+    public Page<TestTableEntity> fuzzyQueryPageByName(TestTableSearchDto query) {
+        LambdaQueryWrapper<TestTableEntity> like = new LambdaQueryWrapper<>();
+        like.like(TestTableEntity::getName, query.getName());
+
+        Page<TestTableEntity> res = new Page<>();
+        res.setPages(query.getPage());
+        res.setSize(query.getSize());
+        res.setOrders(Lists.newArrayList(new OrderItem("name", true)));
+        return getBaseMapper().selectPage(res, like);
     }
 }

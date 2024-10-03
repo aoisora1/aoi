@@ -2,6 +2,8 @@ package com.aoi.core.config;
 
 import com.aoi.core.util.UserHolder;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,17 @@ import java.sql.Timestamp;
  */
 @Configuration
 public class MybatisPlusConfig {
+
+    @Bean
+    public MybatisPlusInterceptor paginationInterceptor() {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+
+        // 添加分页插件
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+        mybatisPlusInterceptor.addInnerInterceptor(paginationInnerInterceptor);
+
+        return mybatisPlusInterceptor;
+    }
 
     @Bean
     public MyMetaObjectHandler metaObjectHandler() {
