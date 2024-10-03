@@ -44,6 +44,8 @@
                 <artifactId>snakeyaml</artifactId>
                 <version>1.27</version>
             </dependency>
+
+            <!-- springweb项目起步依赖 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -55,6 +57,8 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- spring集成测试 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
@@ -81,21 +85,29 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>3.4.2</version>
             </dependency>
+
+            <!-- druid数据库连接池 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>1.1.17</version>
             </dependency>
+
+            <!-- google工具库 -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>33.3.1-jre</version>
             </dependency>
+
+            <!-- 提供mysql driver class -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>8.0.11</version>
             </dependency>
+
+            <!-- 参数校验 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-validation</artifactId>
