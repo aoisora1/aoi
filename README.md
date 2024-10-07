@@ -15,3 +15,7 @@ TODO列表
 - 配置中心
 - redis + springsession
 - flyway
+
+next todo
+- 引入flyway 脚本+文件示例 版本号规则测试用例 版本号重名测试用例
+- 新增测试用的数据库或者使用h2

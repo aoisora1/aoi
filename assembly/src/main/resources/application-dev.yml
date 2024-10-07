@@ -1,7 +1,7 @@
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/aoi
+      url: jdbc:mysql://localhost:3306/aoi-flyway
       username: aoi
       password: 131747hu
       driver-class-name: com.mysql.jdbc.Driver
