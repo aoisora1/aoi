@@ -6,6 +6,7 @@
 - assembly打包整个项目为zip,通过sh脚本直接启动
 - 单元测试,springboot集成测试
 - aop实现controller请求审计日志记录
+- flyway
 
 TODO列表
 - swagger
@@ -14,8 +15,7 @@ TODO列表
 - 告警中心
 - 配置中心
 - redis + springsession
-- flyway
+
 
 next todo
-- 引入flyway 脚本+文件示例 版本号规则测试用例 版本号重名测试用例
 - 新增测试用的数据库或者使用h2

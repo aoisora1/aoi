@@ -72,4 +72,22 @@
 
     </dependencies>
 
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/main/resources/db/migration</directory>
+                <targetPath>db/migration</targetPath>
+                <includes>
+                    <include>*</include>
+                </includes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>*</include>
+                </includes>
+            </testResource>
+        </testResources>
+    </build>
+
 </project>
