@@ -1,5 +1,12 @@
+mybatis-plus:
+  configuration:
+    cache-enabled: false # 关闭二级缓存
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 # TODO 使用h2
 spring:
+  messages:
+    basename: i18n/error/description,i18n/error/solution
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/aoi-flyway

@@ -48,7 +48,7 @@ public class TestController {
     public void post2() { }
 
     @GetMapping("/testTable/{id}")
-    public TestTableEntity getTestTable(@PathVariable("id") @Pattern(regexp = "[0-9a-zA-Z]{32}]") String id) {
+    public TestTableEntity getTestTable(@PathVariable("id") @Pattern(regexp = "^[0-9a-zA-Z]{32}$") String id) {
         return testTableService.queryById(id);
     }
 }

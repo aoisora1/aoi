@@ -1,7 +1,7 @@
 package com.aoi.core.config;
 
 import com.aoi.assembly.exception.BusinessException;
-import com.aoi.core.exception.ExceptionService;
+import com.aoi.core.exception.ExceptionVoFactory;
 import com.aoi.core.exception.ExceptionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,14 +24,14 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @Autowired
-    private ExceptionService exceptionService;
+    private ExceptionVoFactory exceptionVoFactory;
 
     @ExceptionHandler(value = BusinessException.class)
-    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionVo handleBusinessException(BusinessException e) {
         // TODO 更好的异常打印方式
         e.printStackTrace();
-        return exceptionService.getExceptionVo(e);
+        return exceptionVoFactory.getExceptionVo(e);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
             sb.append(err.getDefaultMessage());
             sb.append(";");
         });
-        return exceptionService.getExceptionVo(new BusinessException("1000", sb.toString()));
+        return exceptionVoFactory.getExceptionVo(new BusinessException("1000", sb.toString()));
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
         // TODO 更好的异常打印方式
         e.printStackTrace();
 
-        return exceptionService.getExceptionVo(new BusinessException("1000", e.getMessage()));
+        return exceptionVoFactory.getExceptionVo(new BusinessException("1000", e.getMessage()));
     }
 
     // 兜底异常处理
@@ -67,6 +67,6 @@ public class GlobalExceptionHandler {
     public ExceptionVo handleException(Exception e) {
         // TODO 更好的异常打印方式
         e.printStackTrace();
-        return exceptionService.getExceptionVo(new BusinessException("500"));
+        return exceptionVoFactory.getExceptionVo(new BusinessException("500"));
     }
 }

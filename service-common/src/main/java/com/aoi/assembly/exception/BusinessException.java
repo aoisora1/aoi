@@ -1,5 +1,7 @@
 package com.aoi.assembly.exception;
 
+import java.util.Locale;
+
 /**
  * @ClassName BusinessException
  * @Description 业务异常
@@ -8,11 +10,12 @@ package com.aoi.assembly.exception;
  */
 public class BusinessException extends RuntimeException {
     private String code;
-    private Object[] arguments;
+    private Object[] args;
 
-    public BusinessException(String code, Object... arguments) {
+    public BusinessException(String code, Object... args) {
+        super(String.format(Locale.ROOT, "code=%s, args=%s", code, args));
         this.code = code;
-        this.arguments = arguments;
+        this.args = args;
     }
 
     public String getCode() {
@@ -23,11 +26,11 @@ public class BusinessException extends RuntimeException {
         this.code = code;
     }
 
-    public Object[] getArguments() {
-        return arguments;
+    public Object[] getArgs() {
+        return args;
     }
 
-    public void setArguments(Object[] arguments) {
-        this.arguments = arguments;
+    public void setArgs(Object[] args) {
+        this.args = args;
     }
 }

@@ -1,13 +1,10 @@
 package com.aoi.core.flyway;
 
-import com.aoi.core.util.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,17 +19,13 @@ public class FlywayTest {
     // flyway脚本版本号不可重复
     // 脚本严格按照V|Rxxx__{}.sql格式
     @Test
-    public void testFlywaySqlFile() throws IOException {
-        String path = FileUtil.getResourcePath("");
-        String filePathString = path.concat(File.separator).concat("db").concat(File.separator).concat("migration");
-        Path filePath = new File(filePathString).toPath();
-
+    public void testFlywaySqlFile() {
+        File directory = FileUtils.getFile(String.join(File.separator, "src", "main", "resources", "db", "migration"));
+        File[] files = directory.listFiles();
         Set<String> unNormalFiles = new HashSet<>();
         Set<String> versions = new HashSet<>();
-        Files.walk(filePath).filter(p -> {
-            return p.toFile().isFile();
-        }).forEach(f -> {
-            String name = f.getFileName().toString();
+        for (File file : files) {
+            String name = file.getName();
             if (!checkFlywayName(name)) {
                 unNormalFiles.add(name);
             } else {
@@ -43,7 +36,8 @@ public class FlywayTest {
                     versions.add(version);
                 }
             }
-        });
+        }
+
         System.out.println(unNormalFiles);
         Assertions.assertThat(unNormalFiles).isEmpty();
     }
