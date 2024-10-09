@@ -1,5 +1,6 @@
 package com.aoi.assembly.exception;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -13,7 +14,7 @@ public class BusinessException extends RuntimeException {
     private Object[] args;
 
     public BusinessException(String code, Object... args) {
-        super(String.format(Locale.ROOT, "code=%s, args=%s", code, args));
+        super(String.format(Locale.ROOT, "code=%s, args=%s", code, Arrays.toString(args)));
         this.code = code;
         this.args = args;
     }

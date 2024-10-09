@@ -120,8 +120,9 @@
                 <includes>
                     <include>*.xml</include>
                     <include>application.yml</include>
-                    <include>application-${spring.profiles}.yml</include>
+                    <include>application-${spring.profile}.yml</include>
                 </includes>
+                <filtering>true</filtering>
             </resource>
         </resources>
     </build>
@@ -132,19 +133,19 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <spring.profiles>dev</spring.profiles>
+                <spring.profile>dev</spring.profile>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
-                <spring.profiles>prod</spring.profiles>
+                <spring.profile>prod</spring.profile>
             </properties>
         </profile>
         <profile>
             <id>test</id>
             <properties>
-                <spring.profiles>test</spring.profiles>
+                <spring.profile>test</spring.profile>
             </properties>
         </profile>
     </profiles>

@@ -13,6 +13,6 @@ mybatis-plus:
 
 spring:
   profiles:
-    active: dev
+    active: @spring.profile@
   messages:
-    basename: i18n/error/description,i18n/error/solution
+    basename: i18n/error/message,i18n/error/description,i18n/error/solution
