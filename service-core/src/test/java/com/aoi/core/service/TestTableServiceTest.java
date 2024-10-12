@@ -101,4 +101,14 @@ public class TestTableServiceTest {
         Assertions.assertThat(testTableEntityPage.getRecords()).hasSize(2);
         Assertions.assertThat(testTableEntityPage.getRecords()).extracting(TestTableEntity::getName).contains("test1", "test2");
     }
+
+    @Test
+    public void test() {
+        TestTableEntity testTableEntity = new TestTableEntity();
+        testTableEntity.setName("test1");
+        testTableService.save(testTableEntity);
+
+        TestTableEntity testTableEntity1 = testTableService.getBaseMapper().selectById(testTableEntity.getId());
+        System.out.println(testTableEntity1.getName());
+    }
 }

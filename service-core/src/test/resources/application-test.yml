@@ -8,14 +8,7 @@ spring:
   messages:
     basename: i18n/error/message,i18n/error/description,i18n/error/solution
   datasource:
-    druid:
-      url: jdbc:mysql://localhost:3306/aoi-flyway
-      username: aoi
-      password: 131747hu
-      driver-class-name: com.mysql.jdbc.Driver
-      initial-size: 10 # 初始连接数量
-      max-active: 20 # 最大存活数
-      max-wait: 60000 # 获取连接超时时间60s
-      query-timeout: 60000 # 查询超时60s
-      max-wait-thread-count: 20 # 最大等待线程数 当无连接可用时进入线程等待
-      keep-alive: true # 保持连接有效性
+    url: jdbc:h2:D:/H2/db/db-test;MODE=Mysql;DB_CLOSE_DELAY=-1
+    username: aoi
+    password: 131747hu
+    driver-class-name: org.h2.Driver
