@@ -9,5 +9,6 @@ import com.aoi.core.my.mybatis.entity.AppInfo;
  * @Author 86184
  * @Date 2024/10/20 13:31
  */
-public interface AppDao extends IMapper<AppInfo>{
+public interface AppDao extends IMapper<AppInfo> {
+    AppInfo createByName(String name);
 }

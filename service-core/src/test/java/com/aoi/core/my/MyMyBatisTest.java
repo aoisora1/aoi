@@ -20,5 +20,6 @@ public class MyMyBatisTest {
     @Test
     public void test() {
         appService.print(appService.crete(Lists.newArrayList("idTest", "nameTest")));
+        appService.getMapper().createByName("nameTest2");
     }
 }
