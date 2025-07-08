@@ -18,4 +18,6 @@ public class TestService {
     public String test() {
         return "test";
     }
+
+    public void test2() {}
 }
