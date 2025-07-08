@@ -27,6 +27,11 @@ public class BeanExcludeFilter extends TypeExcludeFilter {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode() == this.hashCode();
+    }
+
+    @Override
     public int hashCode() {
         return 1;
     }
