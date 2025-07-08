@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.annotation.*;
 
+// 使用同一个测试上下文，不用重复启动容器，提高效率
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

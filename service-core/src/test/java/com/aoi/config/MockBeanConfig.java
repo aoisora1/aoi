@@ -17,7 +17,6 @@ public class MockBeanConfig {
     @Bean
     public ExternalService otherService() {
         ExternalService mock = Mockito.mock(ExternalService.class);
-        Mockito.when(mock.get()).thenReturn("external");
         return mock;
     }
 }
