@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class Game {
     private int winCount = 5;
 
     public Game(Integer id0, Integer id1) {
+        reStart(id0, id1);
+    }
+
+    public void reStart(Integer id0, Integer id1) {
         this.p0 = new Player(id0, PlayerEnum.P_0);
         this.p1 = new Player(id1, PlayerEnum.P_1);
         init();
@@ -30,6 +35,18 @@ public class Game {
         boolean win = win(luozi);
         printQiPan();
         return win;
+    }
+
+    public void clear() {
+        p0 = null;
+        p1 = null;
+        winPlayer = null;
+        deque.clear();
+    }
+
+    // 生成对局信息
+    public String generate() {
+        return null;
     }
 
     private void printQiPan() {
@@ -77,14 +94,25 @@ public class Game {
     }
 
     private void init() {
-        initQiPan();
         deque = new ArrayDeque<>();
+        resetQiPan();
     }
 
-    private void initQiPan() {
-        qiPan = new int[xCount][];
+    private int[][] initQiPan() {
+        int[][] pan = new int[xCount][];
         for (int i = 0; i < xCount; i++) {
-            qiPan[i] = new int[yCount];
+            pan[i] = new int[yCount];
+        }
+        return pan;
+    }
+
+    private void resetQiPan() {
+        if (qiPan == null) {
+            qiPan = initQiPan();
+            return;
+        }
+        for (int i = 0; i < xCount; i++) {
+            Arrays.fill(qiPan[i], 0);
         }
     }
 

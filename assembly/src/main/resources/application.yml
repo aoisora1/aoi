@@ -16,3 +16,9 @@ spring:
     active: @spring.profile@
   messages:
     basename: i18n/error/message,i18n/error/description,i18n/error/solution
+
+game:
+  wuziqi:
+    core-size : 2
+    max-size : 10
+    keep-alive-time : 10
