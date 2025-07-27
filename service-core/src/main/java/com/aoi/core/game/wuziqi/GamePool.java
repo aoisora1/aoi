@@ -79,7 +79,7 @@ public class GamePool {
                 logger.info("对局信息：进行中对局{}，空闲对局{}", gaming.size(), gamesFree.size());
                 logger.info("结束释放空闲对局");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(60000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

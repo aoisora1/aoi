@@ -35,12 +35,18 @@ public class GameTest {
     @Test
     public void test2() throws InterruptedException {
         logger.info("test2");
-        game.endGame(game.newGame(0, 1));
-        game.endGame(game.newGame(0, 1));
-        game.endGame(game.newGame(0, 1));
-        game.endGame(game.newGame(0, 1));
-        game.endGame(game.newGame(0, 1));
+        int i = game.newGame(0, 1);
+        int i2 = game.newGame(0, 1);
+        int i3 = game.newGame(0, 1);
+        int i4 = game.newGame(0, 1);
+        int i5 = game.newGame(0, 1);
 
+        Thread.sleep(10000);
+        game.endGame(i);
+        game.endGame(i2);
+        game.endGame(i3);
+        game.endGame(i4);
+        game.endGame(i5);
         Thread.sleep(10000);
         System.out.println();
     }
