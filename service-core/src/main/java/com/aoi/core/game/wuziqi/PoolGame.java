@@ -26,6 +26,11 @@ public class PoolGame extends Game {
         this.count++;
     }
 
+    public void endGame() {
+        this.generate();
+        this.clear();
+    }
+
     private void reStart(int id) {
         this.id = id;
         this.gaming = true;
@@ -44,6 +49,10 @@ public class PoolGame extends Game {
 
     public int getId() {
         return id;
+    }
+
+    public long getStartTime() {
+        return startTime;
     }
 
     @Override
