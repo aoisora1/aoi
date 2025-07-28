@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @IntegrationTest
-public class GameTest {
-    private final Logger logger = LoggerFactory.getLogger(GameTest.class);
+public class WuZiQiTest {
+    private final Logger logger = LoggerFactory.getLogger(WuZiQiTest.class);
 
     @Autowired
     GameManager game;

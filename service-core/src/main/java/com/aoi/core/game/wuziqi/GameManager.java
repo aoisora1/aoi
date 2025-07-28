@@ -19,11 +19,11 @@ public class GameManager {
     }
 
     public boolean luozi(int gameId, int id, int x, int y) {
-        PoolGame poolGame = pool.get(gameId);
-        if (poolGame == null || !poolGame.isGaming()) {
+        WuZiQiPoolWuZiQi wuZiQiPoolGame = pool.get(gameId);
+        if (wuZiQiPoolGame == null || !wuZiQiPoolGame.isGaming()) {
             throw new RuntimeException("对局不存在!");
         }
-        boolean win = poolGame.luozi(id, x, y);
+        boolean win = wuZiQiPoolGame.luozi(id, x, y);
         if (win) {
             logger.info("对局{}完成", gameId);
             endGame(gameId);
@@ -33,11 +33,11 @@ public class GameManager {
 
     public void endGame(int gameId) {
         logger.info("结束对局{}", gameId);
-        PoolGame poolGame = pool.get(gameId);
-        if (poolGame == null || !poolGame.isGaming()) {
+        WuZiQiPoolWuZiQi wuZiQiPoolGame = pool.get(gameId);
+        if (wuZiQiPoolGame == null || !wuZiQiPoolGame.isGaming()) {
             throw new RuntimeException("对局不存在!");
         }
         pool.release(gameId);
-        poolGame.endGame();
+        wuZiQiPoolGame.endGame();
     }
 }

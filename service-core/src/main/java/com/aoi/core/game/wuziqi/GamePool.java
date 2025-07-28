@@ -7,9 +7,9 @@ import java.util.*;
 
 public class GamePool {
     private final Logger logger = LoggerFactory.getLogger(GamePool.class);
-    private Map<Integer, PoolGame> gaming; // 正在进行的对局
-    private List<PoolGame> coreGame; // 核心对局
-    private LinkedList<PoolGame> gamesFree; // 非核心空闲对局
+    private Map<Integer, WuZiQiPoolWuZiQi> gaming; // 正在进行的对局
+    private List<WuZiQiPoolWuZiQi> coreGame; // 核心对局
+    private LinkedList<WuZiQiPoolWuZiQi> gamesFree; // 非核心空闲对局
     private WuZiQiProperties properties;
     private int count; // 对局累加器，用数据库自增主键
     private long expirationTime;
@@ -23,17 +23,17 @@ public class GamePool {
         this.startDaemon();
     }
 
-    public PoolGame newGame(int id0, int id1) {
+    public WuZiQiPoolWuZiQi newGame(int id0, int id1) {
         if (gaming.size() > properties.getMaxSize()) {
             throw new RuntimeException("对局已满请稍等!");
         }
 
         // 先使用核心对局，先撑满核心对局数
         if (coreGame.size() < properties.getCoreSize()) {
-            PoolGame poolGame = new PoolGame(count++, id0, id1);
-            coreGame.add(poolGame);
-            gaming.put(poolGame.getId(), poolGame);
-            return poolGame;
+            WuZiQiPoolWuZiQi wuZiQiPoolGame = new WuZiQiPoolWuZiQi(count++, id0, id1);
+            coreGame.add(wuZiQiPoolGame);
+            gaming.put(wuZiQiPoolGame.getId(), wuZiQiPoolGame);
+            return wuZiQiPoolGame;
         }
 
         // 核心对局已满，优先使用核心非进行中对局
@@ -47,37 +47,37 @@ public class GamePool {
 
         // 使用非核心空闲对局
         if (!gamesFree.isEmpty()) {
-            PoolGame first = gamesFree.pop();
+            WuZiQiPoolWuZiQi first = gamesFree.pop();
             first.reStart(count++, id0, id1);
             gaming.put(first.getId(), first);
             return first;
         }
 
         // 新建非核心对局
-        PoolGame poolGame = new PoolGame(count++, id0, id1);
-        gaming.put(poolGame.getId(), poolGame);
-        return poolGame;
+        WuZiQiPoolWuZiQi wuZiQiPoolGame = new WuZiQiPoolWuZiQi(count++, id0, id1);
+        gaming.put(wuZiQiPoolGame.getId(), wuZiQiPoolGame);
+        return wuZiQiPoolGame;
     }
 
     public void release(int id) {
-        PoolGame poolGame = gaming.remove(id);
-        if (!coreGame.contains(poolGame)) {
-            gamesFree.addLast(poolGame);
+        WuZiQiPoolWuZiQi wuZiQiPoolGame = gaming.remove(id);
+        if (!coreGame.contains(wuZiQiPoolGame)) {
+            gamesFree.addLast(wuZiQiPoolGame);
         }
     }
 
-    public PoolGame get(int id) {
+    public WuZiQiPoolWuZiQi get(int id) {
         return gaming.get(id);
     }
 
     private void startDaemon() {
         Thread thread = new Thread(() -> {
             while (true) {
-                logger.info("开始释放空闲对局");
-                logger.info("对局信息：进行中对局{}，空闲对局{}", gaming.size(), gamesFree.size());
+                logger.info("开始释放非核心空闲对局");
+                logger.info("对局信息：进行中对局{}，非核心空闲对局{}", gaming.size(), gamesFree.size());
                 releaseFree();
-                logger.info("对局信息：进行中对局{}，空闲对局{}", gaming.size(), gamesFree.size());
-                logger.info("结束释放空闲对局");
+                logger.info("对局信息：进行中对局{}，非核心空闲对局{}", gaming.size(), gamesFree.size());
+                logger.info("结束释放非核心空闲对局");
                 try {
                     Thread.sleep(60000);
                 } catch (InterruptedException e) {
@@ -89,14 +89,14 @@ public class GamePool {
         thread.start();
     }
 
-    // 加锁
+    // TODO 抽象
+    // TODO 加锁
     private void releaseFree() {
         long currentTime = System.currentTimeMillis();
-        Iterator<PoolGame> iterator = gamesFree.iterator();
+        Iterator<WuZiQiPoolWuZiQi> iterator = gamesFree.iterator();
         while (iterator.hasNext()) {
-            PoolGame next = iterator.next();
+            WuZiQiPoolWuZiQi next = iterator.next();
             if (currentTime - next.getStartTime() > this.expirationTime) {
-                next.endGame();
                 iterator.remove();
             }
         }

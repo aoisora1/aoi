@@ -12,7 +12,7 @@ public class GameConsoleTest {
         Scanner sc = new Scanner(System.in);
 
         boolean win = false;
-        Game g = new Game(players[0],  players[1]);
+        WuZiQi g = new WuZiQi(players[0],  players[1]);
         while (!win) {
             for (int i = 0; i < players.length; i++) {
                 System.out.println(String.format("输入下棋位置，逗号分隔。%d号下棋", players[i]));

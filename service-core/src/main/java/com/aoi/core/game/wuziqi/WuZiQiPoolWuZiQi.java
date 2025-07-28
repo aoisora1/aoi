@@ -3,14 +3,14 @@ package com.aoi.core.game.wuziqi;
 import java.util.Objects;
 
 // 对局池
-public class PoolGame extends Game {
+public class WuZiQiPoolWuZiQi extends WuZiQi {
     private int id;
     private int count; // 已完成对局数
     private long startTime; // 对局开始时间
     private long endTime; // 对局结束时间
     private boolean gaming; // 对局是否正在进行
 
-    public PoolGame(int id, Integer id0, Integer id1) {
+    public WuZiQiPoolWuZiQi(int id, Integer id0, Integer id1) {
         super(id0, id1);
         reStart(id);
     }
@@ -58,8 +58,8 @@ public class PoolGame extends Game {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        PoolGame poolGame = (PoolGame) o;
-        return id == poolGame.id;
+        WuZiQiPoolWuZiQi wuZiQiPoolGame = (WuZiQiPoolWuZiQi) o;
+        return id == wuZiQiPoolGame.id;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-public class Game {
+public class WuZiQi {
     private Player p0;
     private Player p1;
     private Player winPlayer;
@@ -18,7 +18,7 @@ public class Game {
     private int yCount = 20; // 棋盘竖
     private int winCount = 5;
 
-    public Game(Integer id0, Integer id1) {
+    public WuZiQi(Integer id0, Integer id1) {
         reStart(id0, id1);
     }
 
