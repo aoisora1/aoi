@@ -3,6 +3,7 @@ package com.aoi.core.game.gobang;
 import com.aoi.IntegrationTest;
 import com.aoi.core.game.GameEnum;
 import com.aoi.core.game.GameExecutor;
+import com.aoi.core.game.GamePoolManager;
 import com.aoi.core.game.context.EndContext;
 import com.aoi.core.game.gobang.context.GobangStartContext;
 import com.aoi.core.game.gobang.context.GobangStepContext;
@@ -13,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class GobangTest {
     @Autowired
     private GameExecutor executor;
+
+    @Autowired
+    private GamePoolManager manager;
 
     @Test
     public void test() {
@@ -39,5 +43,57 @@ public class GobangTest {
         executor.step(GameEnum.gobang.getCode(), id, new GobangStepContext(0, 0, 4));
         executor.newGame(new GobangStartContext(6, 0, 1));
 
+    }
+
+    @Test
+    public void test2() {
+        start(0, 0, 1);
+        printGame(0);
+
+        start(1, 0, 1);
+        printGame(1);
+
+        start(2, 0, 1);
+        printGame(2);
+        step(2, 0, 0, 0);
+        end(2);
+
+        start(3, 0, 1);
+        printGame(3);
+        step(3, 0, 0, 0);
+        end(3);
+    }
+
+    @Test
+    public void test3() {
+        start(0, 0, 1);
+        printGame(0);
+        end(0);
+
+        start(1, 0, 1);
+        printGame(1);
+        end(1);
+
+        start(2, 0, 1);
+        printGame(2);
+
+        start(3, 0, 1);
+        printGame(3);
+    }
+
+    private void start(int id, int p0, int p1) {
+        executor.newGame(new GobangStartContext(id, p0, p1));
+    }
+
+    private void step(int id, int pid, int x, int y) {
+        executor.step(GameEnum.gobang.getCode(), id, new GobangStepContext(pid, x, y));
+    }
+
+    private void end(int id) {
+        executor.endGame(GameEnum.gobang.getCode(), id, new EndContext());
+    }
+
+    private void printGame(int id) {
+        System.out.println(manager.getPool(GameEnum.gobang.getCode()).get(id));
     }
 }

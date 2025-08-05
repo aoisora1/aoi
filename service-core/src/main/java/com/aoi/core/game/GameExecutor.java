@@ -44,6 +44,7 @@ public class GameExecutor {
         // TODO 保存对局信息
         manager.getPool(code).release(id);
         logger.info("释放对局{}", id);
+        // TODO 测试用后续删除，改为定时打印或者前端查询，或者指标
         manager.printGameInfo();
     }
 

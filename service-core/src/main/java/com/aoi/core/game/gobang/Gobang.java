@@ -63,6 +63,7 @@ public class Gobang extends Game {
             resultContext = new GobangStepResultContext(false, false, -1);
         }
 
+        // TODO 测试用后续删除
         printQiPan();
         return resultContext;
     }
