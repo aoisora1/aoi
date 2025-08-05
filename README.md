@@ -21,3 +21,11 @@ next todo
 - 新增测试用的数据库或者使用h2
 - CsvSource ParameterizedTest
 - Mockito.doAnswer
+
+
+### 游戏
+五子棋
+井字棋
+三个三那个游戏
+猜先：骰子，抽扑克牌，石头剪刀布，猜单双，猜黑白
+个人对局历史，胜率

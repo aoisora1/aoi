@@ -1,9 +1,6 @@
-package com.aoi.core.game.wuziqi;
+package com.aoi.core.game;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-@ConfigurationProperties(prefix = "game.wuziqi")
-public class WuZiQiProperties {
+public class GamePoolProperties {
     private int coreSize;
     private int maxSize;
     private int keepAliveTime; // 分

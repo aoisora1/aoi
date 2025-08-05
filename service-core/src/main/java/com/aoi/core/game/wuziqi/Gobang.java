@@ -1,6 +1,15 @@
 package com.aoi.core.game.wuziqi;
 
+import com.aoi.core.game.*;
+import com.aoi.core.game.context.EndContext;
+import com.aoi.core.game.context.StartContext;
+import com.aoi.core.game.context.StepContext;
+import com.aoi.core.game.context.StepResultContext;
+import com.aoi.core.game.wuziqi.context.GobangStartContext;
+import com.aoi.core.game.wuziqi.context.GobangStepContext;
+import com.aoi.core.game.wuziqi.context.GobangStepResultContext;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayDeque;
@@ -8,75 +17,100 @@ import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
-public class WuZiQi {
-    private Player p0;
-    private Player p1;
-    private Player winPlayer;
-    private Deque<Luozi> deque; // 对局落子信息
-    private int[][] qiPan; // 棋盘，一层横，二层纵
-    private int xCount = 20; // 棋盘横
-    private int yCount = 20; // 棋盘竖
-    private int winCount = 5;
+/**
+ * 五子棋
+ */
+public class Gobang extends Game {
+    protected Player p0;
+    protected Player p1;
+    protected Player winPlayer;
+    protected Deque<Step> deque; // 对局落子信息
+    protected int[][] chessboard; // 棋盘，一层横，二层纵
+    private final int xCount = 20; // 棋盘横
+    private final int yCount = 20; // 棋盘竖
+    private final int winCount = 5;
 
-    public WuZiQi(Integer id0, Integer id1) {
-        reStart(id0, id1);
-    }
-
-    public void reStart(Integer id0, Integer id1) {
-        this.p0 = new Player(id0, PlayerEnum.P_0);
-        this.p1 = new Player(id1, PlayerEnum.P_1);
+    public Gobang(StartContext context) {
+        super(context);
         init();
     }
 
-    public boolean luozi(Integer id, int x, int y) {
-        Luozi luozi = new Luozi(getP(id), x, y);
-        checkLuoZi(luozi);
-        doLuoZi(luozi);
-        boolean win = win(luozi);
+    @Override
+    public void startGame(StartContext context) {
+        super.startGame(context);
+        this.p0 = new Player(((GobangStartContext) context).getId0(), PlayerEnum.P_0);
+        this.p1 = new Player(((GobangStartContext) context).getId1(), PlayerEnum.P_1);
+    }
+
+    @Override
+    public StepResultContext step(StepContext context) {
+        int pId = ((GobangStepContext)context).getpId();
+        int x = ((GobangStepContext)context).getX();
+        int y = ((GobangStepContext)context).getY();
+
+        Step step = new Step(getP(pId), x, y);
+        String checkResult = checkStep(step);
+        if (StringUtils.isNotEmpty(checkResult)) {
+            return new GobangStepResultContext(checkResult);
+        }
+
+        doStep(step);
+        boolean win = win(step);
+        GobangStepResultContext resultContext;
+        if (win) {
+            resultContext = new GobangStepResultContext(win, false, winPlayer.id);
+        } else {
+            // TODO 棋盘是否已满
+            resultContext = new GobangStepResultContext(false, false, -1);
+        }
+
         printQiPan();
-        return win;
+        return resultContext;
     }
 
-    public void clear() {
-        p0 = null;
-        p1 = null;
-        winPlayer = null;
+    @Override
+    protected void doEndGame(EndContext context) {
+        Arrays.fill(chessboard, null);
+        chessboard = null;
         deque.clear();
+        deque = null;
     }
 
-    // 生成对局信息
-    public String generate() {
-        return null;
+    @Override
+    public GameInfo generateGameInfo(EndContext context) {
+        // TODO 落子信息等其他信息
+        return new GobangGameInfo(getId(), p0.id, p1.id, winPlayer == null ? -1 : winPlayer.id);
     }
 
     private void printQiPan() {
         for (int i = 0; i < xCount; i++) {
             for (int j = 0; j < yCount; j++) {
-                if (qiPan[i][j] == 0) {
+                if (chessboard[i][j] == 0) {
                     System.out.print(" |");
                 } else {
-                    System.out.print(PlayerEnum.convertColor(qiPan[i][j]) + "|");
+                    System.out.print(PlayerEnum.convertColor(chessboard[i][j]) + "|");
                 }
             }
             System.out.println();
         }
     }
 
-    private void doLuoZi(Luozi luozi) {
-        deque.addLast(luozi);
-        qiPan[luozi.x][luozi.y] = luozi.p.playerEnum.getV();
+    private void doStep(Step step) {
+        deque.addLast(step);
+        chessboard[step.x][step.y] = step.p.playerEnum.getV();
     }
 
-    private void checkLuoZi(Luozi luozi) {
-        if (qiPan[luozi.x][luozi.y] != 0) {
-            throw new RuntimeException("落子无效");
+    private String checkStep(Step step) {
+        if (chessboard[step.x][step.y] != 0) {
+            return "落子无效";
         }
-        if (!deque.isEmpty() && deque.getLast().p == luozi.p) {
-            throw new RuntimeException("落子无效");
+        if (!deque.isEmpty() && deque.getLast().p == step.p) {
+            return "落子无效";
         }
         if (winPlayer != null) {
-            throw new RuntimeException("对局已结束");
+            return "对局已结束";
         }
+        return null;
     }
 
     private boolean valid(int x, int y) {
@@ -95,37 +129,25 @@ public class WuZiQi {
 
     private void init() {
         deque = new ArrayDeque<>();
-        resetQiPan();
+        initQiPan();
     }
 
-    private int[][] initQiPan() {
-        int[][] pan = new int[xCount][];
+    private void initQiPan() {
+        chessboard = new int[xCount][];
         for (int i = 0; i < xCount; i++) {
-            pan[i] = new int[yCount];
-        }
-        return pan;
-    }
-
-    private void resetQiPan() {
-        if (qiPan == null) {
-            qiPan = initQiPan();
-            return;
-        }
-        for (int i = 0; i < xCount; i++) {
-            Arrays.fill(qiPan[i], 0);
+            chessboard[i] = new int[yCount];
         }
     }
 
-    private boolean win(Luozi last) {
+    private boolean win(Step last) {
         boolean win = checkWin(last);
         if (win) {
             winPlayer = last.p;
-            System.out.println(String.format("%d赢得对局", winPlayer.id));
         }
         return win;
     }
 
-    private boolean checkWin(Luozi last) {
+    private boolean checkWin(Step last) {
         int count = 0;
         for (FangXiang f : FangXiang.half) {
             count = 1;
@@ -146,7 +168,7 @@ public class WuZiQi {
         if (!valid(nx, ny)) {
             return 0;
         }
-        if (qiPan[nx][ny] == v) {
+        if (chessboard[nx][ny] == v) {
             return count(v, nx, ny, f) + 1;
         } else {
             return 0;
@@ -160,12 +182,12 @@ public class WuZiQi {
     // 优化，对局池，最多同时N个对局，对局复用(qiPan的内存可以复用)，对局结束后的清理
     // 棋盘满的情况
 
-    class Luozi {
+    class Step {
         Player p;
         int x;
         int y;
 
-        public Luozi(Player p, int x, int y) {
+        public Step(Player p, int x, int y) {
             this.p = p;
             this.x = x;
             this.y = y;
@@ -173,21 +195,15 @@ public class WuZiQi {
     }
 
     enum FangXiang {
-        F_0(0), // 右
-        F_1(1), // 右上
-        F_2(2), // 上
-        F_3(3), // 左上
-        F_4(4), // 左
-        F_5(5), // 左下
-        F_6(6), // 下
-        F_7(7), // 右下
+        F_0(), // 右
+        F_1(), // 右上
+        F_2(), // 上
+        F_3(), // 左上
+        F_4(), // 左
+        F_5(), // 左下
+        F_6(), // 下
+        F_7(), // 右下
         ;
-
-        int v;
-
-        FangXiang(int v) {
-            this.v = v;
-        }
 
         static List<FangXiang> half = Lists.newArrayList(F_0,  F_1, F_2, F_3);
 
