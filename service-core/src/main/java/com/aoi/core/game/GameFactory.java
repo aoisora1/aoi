@@ -14,7 +14,7 @@ public class GameFactory {
         }
         switch (gameEnum) {
             case gobang:
-                return new PoolGobang(context);
+                return new PoolGobang();
             default:
                 throw new RuntimeException("非法数据");
         }

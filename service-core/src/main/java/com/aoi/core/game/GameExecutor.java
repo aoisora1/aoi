@@ -17,14 +17,15 @@ public class GameExecutor {
     @Autowired
     private GamePoolManager manager;
 
-    public int newGame(StartContext context) {
+    public void newGame(StartContext context) {
         logger.info("新建游戏，对局信息: {}", context.getStartInfo());
-        return manager.getPool(context.getCode()).newGame(context).getId();
+        manager.getPool(context.getCode()).newGame(context);
     }
 
     public StepResultContext step(int code, int id, StepContext context) {
-        logger.info("对局{}进行操作{}", context.getStepInfo());
-        Game game = (Game) manager.getPool(code).get(id);
+        logger.info("对局{}进行操作{}", id, context.getStepInfo());
+        Game game = manager.getPool(code).get(id);
+        checkGame(game);
         StepResultContext result = game.step(context);
         if (StringUtils.isNotEmpty(result.getResultInfo())) {
             logger.info("{}", result.getResultInfo());
@@ -36,8 +37,21 @@ public class GameExecutor {
     }
 
     public void endGame(int code, int id, EndContext context) {
-        Game game = (Game) manager.getPool(code).get(id);
+        logger.info("对局{}结束", id);
+        Game game = manager.getPool(code).get(id);
+        checkGame(game);
         GameInfo gameInfo = game.endGame(context);
         // TODO 保存对局信息
+        manager.getPool(code).release(id);
+        logger.info("释放对局{}", id);
+        manager.printGameInfo();
+    }
+
+    private void checkGame(Game game) {
+        if (game == null || !game.isGaming()) {
+            String msg = game == null ? "对局不存在" : "对局已结束";
+            logger.error(msg);
+            throw new GameException("对局不存在或已结束");
+        }
     }
 }

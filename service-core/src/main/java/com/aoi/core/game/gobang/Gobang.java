@@ -30,8 +30,7 @@ public class Gobang extends Game {
     private final int yCount = 20; // 棋盘竖
     private final int winCount = 5;
 
-    public Gobang(StartContext context) {
-        super(context);
+    public Gobang() {
         init();
     }
 
@@ -101,10 +100,16 @@ public class Gobang extends Game {
     }
 
     private String checkStep(Step step) {
+        // 位置已落子
         if (chessboard[step.x][step.y] != 0) {
             return "落子无效";
         }
+        // 没有交替落子
         if (!deque.isEmpty() && deque.getLast().p == step.p) {
+            return "落子无效";
+        }
+        // 不是先手方率先落子
+        if (deque.isEmpty() && step.p.playerEnum != PlayerEnum.P_0) {
             return "落子无效";
         }
         if (winPlayer != null) {

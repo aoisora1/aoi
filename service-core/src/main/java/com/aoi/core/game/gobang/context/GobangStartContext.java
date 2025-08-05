@@ -1,13 +1,14 @@
 package com.aoi.core.game.gobang.context;
 
+import com.aoi.core.game.GameEnum;
 import com.aoi.core.game.context.StartContext;
 
 public class GobangStartContext extends StartContext {
     private int id0;
     private int id1;
 
-    public GobangStartContext(int code, int id, int id0, int id1) {
-        super(code, id);
+    public GobangStartContext(int id, int id0, int id1) {
+        super(GameEnum.gobang.getCode(), id);
         this.id0 = id0;
         this.id1 = id1;
     }

@@ -14,7 +14,14 @@ spring:
     driver-class-name: org.h2.Driver
 
 game:
-  wuziqi:
-    core-size : 2
-    max-size : 10
-    keep-alive-time : 1
+  configs:
+    gobang:
+      core-size : 2
+      max-size : 10
+      keep-alive-time : 10
+    default:
+      core-size: 2
+      max-size: 10
+      keep-alive-time: 10
+
+# 应该要继承默认yml

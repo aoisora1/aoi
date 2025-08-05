@@ -12,12 +12,9 @@ public abstract class Game {
     private long endTime;
     private boolean gaming;
 
-    public Game(StartContext context) {
+    public void startGame(StartContext context) {
         this.id = context.getId();
         this.code = context.getCode();
-    }
-
-    public void startGame(StartContext context) {
         this.startTime = System.currentTimeMillis();
         this.endTime = -1;
         this.gaming = true;

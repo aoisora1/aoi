@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -98,7 +99,7 @@ public class GamePool {
                 logger.info("对局信息：进行中对局{}，非核心空闲对局{}", gaming.size(), gamesFree.size());
                 logger.info("结束释放非核心空闲对局");
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(TimeUnit.MINUTES.toMillis(1));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -116,12 +117,24 @@ public class GamePool {
             while (iterator.hasNext()) {
                 Game next = iterator.next();
                 if (currentTime - next.getStartTime() > this.expirationTime) {
+                    logger.error("对局{}超时释放", next.getId());
                     iterator.remove();
                 }
             }
         } finally {
             lock.unlock();
         }
+    }
+
+    public String getGameInfo() {
+        StringBuilder info = new StringBuilder();
+        info.append("进行中对局:");
+        info.append(gaming.size());
+        info.append(".核心对局:");
+        info.append(coreGame.size());
+        info.append(".非核心空闲对局:");
+        info.append(gamesFree.size());
+        return info.toString();
     }
 
 }
