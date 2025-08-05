@@ -1,7 +1,7 @@
 package com.aoi.core.game;
 
 import com.aoi.core.game.context.StartContext;
-import com.aoi.core.game.wuziqi.PoolGobang;
+import com.aoi.core.game.gobang.PoolGobang;
 import org.springframework.stereotype.Service;
 
 @Service

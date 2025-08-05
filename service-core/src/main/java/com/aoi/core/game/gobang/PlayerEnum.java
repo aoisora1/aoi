@@ -1,4 +1,4 @@
-package com.aoi.core.game.wuziqi;
+package com.aoi.core.game.gobang;
 
 public enum PlayerEnum {
     P_0(0, "先手", "黑", -1),

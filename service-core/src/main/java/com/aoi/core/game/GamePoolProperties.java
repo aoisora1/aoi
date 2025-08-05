@@ -28,4 +28,5 @@ public class GamePoolProperties {
     public void setKeepAliveTime(int keepAliveTime) {
         this.keepAliveTime = keepAliveTime;
     }
+
 }

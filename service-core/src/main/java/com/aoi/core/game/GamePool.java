@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class GamePool extends Thread {
+public class GamePool {
     private final Logger logger = LoggerFactory.getLogger(GamePool.class);
     private Map<Integer, Game> gaming; // 正在进行的对局
     private List<Game> coreGame; // 核心对局

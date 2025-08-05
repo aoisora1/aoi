@@ -1,13 +1,13 @@
-package com.aoi.core.game.wuziqi;
+package com.aoi.core.game.gobang;
 
 import com.aoi.core.game.*;
 import com.aoi.core.game.context.EndContext;
 import com.aoi.core.game.context.StartContext;
 import com.aoi.core.game.context.StepContext;
 import com.aoi.core.game.context.StepResultContext;
-import com.aoi.core.game.wuziqi.context.GobangStartContext;
-import com.aoi.core.game.wuziqi.context.GobangStepContext;
-import com.aoi.core.game.wuziqi.context.GobangStepResultContext;
+import com.aoi.core.game.gobang.context.GobangStartContext;
+import com.aoi.core.game.gobang.context.GobangStepContext;
+import com.aoi.core.game.gobang.context.GobangStepResultContext;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -79,7 +79,7 @@ public class Gobang extends Game {
     @Override
     public GameInfo generateGameInfo(EndContext context) {
         // TODO 落子信息等其他信息
-        return new GobangGameInfo(getId(), p0.id, p1.id, winPlayer == null ? -1 : winPlayer.id);
+        return new GobangGameInfo(getId(), p0.id, p1.id, winPlayer == null ? -1 : winPlayer.id, getStartTime(), getEndTime());
     }
 
     private void printQiPan() {

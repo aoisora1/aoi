@@ -1,7 +1,5 @@
 package com.aoi.core.game;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,21 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableConfigurationProperties(GamePoolProperties.class)
 public class GameConfiguration {
 
     @Bean
-    public GamePoolManager gamePoolManager(ApplicationContext applicationContext, GameFactory gameFactory) {
-        GamePoolProperties defaultProperties = applicationContext.getEnvironment().getProperty("game.default", GamePoolProperties.class);
+    public GamePoolManager gamePoolManager(GameFactory gameFactory, GameProperties gameProperties) {
         Map<Integer, GamePool> gamePoolMap = new HashMap<>();
-
         for (GameEnum gameEnum : GameEnum.values()) {
-            GamePoolProperties gamePoolProperties = applicationContext.getEnvironment().getProperty("game." + gameEnum.getEn(), GamePoolProperties.class);
             GamePool gamePool;
-            if (gamePoolProperties != null) {
-                gamePool = new GamePool(gamePoolProperties, gameFactory);
+            if (gameProperties.hasConfig(gameEnum.getEn())) {
+                gamePool = new GamePool(gameProperties.getConfig(gameEnum.getEn()), gameFactory);
             } else {
-                gamePool = new GamePool(defaultProperties, gameFactory);
+                gamePool = new GamePool(gameProperties.getConfig("default"), gameFactory);
             }
             gamePoolMap.put(gameEnum.getCode(), gamePool);
         }

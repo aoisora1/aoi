@@ -1,4 +1,4 @@
-package com.aoi.core.game.wuziqi;
+package com.aoi.core.game.gobang;
 
 import com.aoi.core.game.context.EndContext;
 import com.aoi.core.game.context.StartContext;

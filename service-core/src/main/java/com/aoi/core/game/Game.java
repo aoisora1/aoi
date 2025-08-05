@@ -48,4 +48,8 @@ public abstract class Game {
     public long getStartTime() {
         return startTime;
     }
+
+    public long getEndTime() {
+        return endTime;
+    }
 }

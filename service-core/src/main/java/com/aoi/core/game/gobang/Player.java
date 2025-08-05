@@ -1,4 +1,4 @@
-package com.aoi.core.game.wuziqi;
+package com.aoi.core.game.gobang;
 
 public class Player {
     Integer id;

@@ -18,11 +18,12 @@ spring:
     basename: i18n/error/message,i18n/error/description,i18n/error/solution
 
 game:
-  gobang:
-    core-size : 2
-    max-size : 10
-    keep-alive-time : 10
-  default:
-    core-size: 2
-    max-size: 10
-    keep-alive-time: 10
+  configs:
+    gobang:
+      core-size : 2
+      max-size : 10
+      keep-alive-time : 10
+    default:
+      core-size: 2
+      max-size: 10
+      keep-alive-time: 10

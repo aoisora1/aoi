@@ -1,4 +1,4 @@
-package com.aoi.core.game.wuziqi.context;
+package com.aoi.core.game.gobang.context;
 
 import com.aoi.core.game.context.StepContext;
 
