@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameFactory {
 
+    // TODO 开闭
     public Game newGame(StartContext context) {
         GameEnum gameEnum = GameEnum.getGameEnum(context.getCode());
         if (gameEnum == null) {
