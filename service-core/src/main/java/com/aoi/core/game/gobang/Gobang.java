@@ -74,6 +74,9 @@ public class Gobang extends Game {
         chessboard = null;
         deque.clear();
         deque = null;
+        winPlayer = null;
+        p0 = null;
+        p1 = null;
     }
 
     @Override
@@ -135,10 +138,10 @@ public class Gobang extends Game {
 
     private void init() {
         deque = new ArrayDeque<>();
-        initQiPan();
+        initChessboard();
     }
 
-    private void initQiPan() {
+    private void initChessboard() {
         chessboard = new int[xCount][];
         for (int i = 0; i < xCount; i++) {
             chessboard[i] = new int[yCount];

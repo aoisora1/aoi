@@ -11,6 +11,9 @@ public class PoolGobang extends Gobang {
             Arrays.fill(chessboard[i], 0);
         }
         deque.clear();
+        winPlayer = null;
+        p0 = null;
+        p1 = null;
     }
 
     @Override
