@@ -24,6 +24,9 @@ next todo
 
 
 ### 游戏
+系统平台：两小吱
+将游戏部分拆成另一个项目 com.lxz.xx
+
 五子棋
 井字棋
 三个三那个游戏
@@ -31,3 +34,8 @@ next todo
 个人对局历史，胜率
 管理员 进行中对局监控 主动关闭对局
 对局监控 指标
+
+高优先级：
+netty连接玩家
+spring security sso登录，spring redis session
+用户注册登录
