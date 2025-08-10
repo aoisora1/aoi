@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "game")
+@ConfigurationProperties(prefix = "game.pool")
 public class GameProperties {
     private final Map<String, GamePoolProperties> configs = new HashMap<>();
 
